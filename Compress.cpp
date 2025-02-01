@@ -96,7 +96,6 @@ class clist{
             cout << endl;
         }
 };
-//        __________________Phase 1____________________
 
 void Frequency(char data[],int counts[],int size){
     int ct=0;
@@ -164,7 +163,6 @@ void Huffman_Tree(clist& L, cTnode*& ptop){
         }
 
         L.sortAttach(pnn);
-        // Htb2a Eltop bta3et el Tree
         ptop = pnnTreeTop;
     }
 }
@@ -192,8 +190,7 @@ void Huffman_Code(cTnode *ptrav, string dir, clist &enc,cTnode *ptop) {
     Huffman_Code(ptrav->pLeft, dir + "0", enc,ptop);
     Huffman_Code(ptrav->pRight, dir + "1", enc,ptop);
 }
-//        __________________Phase 2____________________
-//              input                     input                     output       output
+
 void compress(char data[],int data_size, cnode *code, char comp[], int &size, char *&new_comp) {
     int c = 0, rem = 7;
     char letter;
@@ -255,7 +252,6 @@ void Decompress(char comp[], int compSize, string &Decomp, cnode *code) {
     cnode *ptrav;
     for (int i = 0; i < compSize; i++) {
         for (int bit = 7; bit >= 0; bit--) { 
-            // '0' 3lshan t5leha string
             currentBit = ((comp[i] >> bit) & 1) + '0';
             Bits_String += currentBit; 
             ptrav = code;
@@ -299,18 +295,12 @@ int main() {
     ofstream f2("/COMP_FILE.jpeg",ofstream::binary);
 
     data.seekg(0,data.end);
-
-    // h1 is the length of the file
+    
     int h1 = data.tellg();
     data.seekg(0,data.beg);
 
     string dataString;
-    /* 
-        the index 128 => it will be the Zero point for us
-        before 128 is negative and after is positive
-        our rule is :
-        so (number = count[i] - 128) it is the 
-    */
+
     int counts[256];
     char *data_hex = new char[h1];
     char ch;
@@ -319,7 +309,6 @@ int main() {
         data_hex[i] = ch;
     }
     Frequency(data_hex, counts,h1);
-    // Freq_Display(counts);
  
     for (int i = 0; i < 256; i++) { 
         if (counts[i] > 0) { 
@@ -333,26 +322,18 @@ int main() {
     Huffman_Tree(L, ptop);
     cTnode *ptop_temp = ptop;
     Huffman_Code(ptop, "", Encoded,ptop_temp);
-    // Freq_Display(counts);
     cout<<endl;
-    // Encoded.display();
     int size_temp = h1*2;
     int size_new;
     char comp_temp[size_temp];
     char *new_comp;
     string Decompressed;
-    
-    // This Function will return a ___newArray___ of compressed data
-
-    //              input                           input            input          output    output
     compress(data_hex,h1, Encoded.phead, comp_temp,size_new,new_comp);
 
     display_compress_char(new_comp, size_new);
     for(int i=0;i<size_new;i++){
         f2.write(&new_comp[i],1);
     }
-    // Return the la bla bla occurs in comp to meaningful words
-    //                input             input             output            input
     Decompress(new_comp,size_new,Decompressed,Encoded.phead);
     exp_CODE(Encoded.phead);
 
