@@ -52,9 +52,6 @@ int main() {
 - Add support for text-based input/output.
 - Implement adaptive Huffman coding for dynamic data.
 
-## License
-This project is open-source under the MIT License.
-
 ## Author
-[Your Name] - Implemented Huffman coding algorithm in C++ for efficient data compression.
+AmrKhaled @2024 - Implemented Huffman coding algorithm in C++ for efficient data compression.
 
